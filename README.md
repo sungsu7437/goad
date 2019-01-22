@@ -131,12 +131,13 @@ auth-token: YOUR-SECRET-AUTH-TOKEN
 Goad can also be run as a Docker container which exposes the web API:
 
     docker build -t goad .
-    docker run --rm -p 8080:8080 -e AWS_ACCESS_KEY_ID=<your key ID> -e AWS_SECRET_ACCESS_KEY=<your key> goad
+    docker run --name goad --rm -dit -e AWS_ACCESS_KEY_ID=<your key ID> -e AWS_SECRET_ACCESS_KEY=<your key> goad /bin/bash
 
-You can then execute a load test using WebSocket:
-
-    ws://localhost:8080/goad?url=https://example.com&requests=1000&concurrency=10&timelimit=3600&timeout=15&region[]=us-east-1&region[]=eu-west-1
-
+Access into the container
+    
+    docker exec -it goad bash
+    goad -n 1000 -c 5 https://example.com
+    
 ## How it works
 
 Goad takes full advantage of the power of Amazon Lambdas and Go's concurrency for distributed load testing. You can use Goad to launch HTTP loads from up to four AWS regions at once. Each lambda can handle hundreds of concurrent connections, we estimate that Goad should be able to achieve peak loads of up to **100,000 concurrent requests**.
