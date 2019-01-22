@@ -130,7 +130,6 @@ auth-token: YOUR-SECRET-AUTH-TOKEN
 
 Goad can also be run as a Docker container which exposes the web API:
 
-    docker build -t goad .
     docker run --name goad --rm -dit -e AWS_ACCESS_KEY_ID=<your key ID> -e AWS_SECRET_ACCESS_KEY=<your key> goad /bin/bash
 
 Access into the container
